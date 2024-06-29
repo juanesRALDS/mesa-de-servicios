@@ -77,26 +77,14 @@ WSGI_APPLICATION = 'ProyectoMesaServicio.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'sqlite': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'mesaservicio.db',
-    },
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mesaservicio',
+        'NAME': 'mesaservicios',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '3306',
-    },
-    'mongo': {
-        'ENGINE': 'djongo',
-        'NAME': 'MESASERVICIO',
-        'CLIENT': {
-            'host': "aquí su cadena de conexión"
-        }
-    },
-
+    }
 }
 
 
@@ -155,7 +143,7 @@ GOOGLE_RECAPTCHA_SECRET_KEY = '6Lf2r3coAAAAAIs4RnLRtXZRVnfG8KTazeauAr0v'
 
 # variables configuración correo
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'sucorreo'
-EMAIL_HOST_PASSWORD = '#######'
+EMAIL_HOST_USER = 'juanesrondon50@gmail.com'
+EMAIL_HOST_PASSWORD = '12345'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True

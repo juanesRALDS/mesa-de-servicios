@@ -239,7 +239,64 @@ def asignarTecnicoCaso(request):
         return render(request, "frmIniciarSesion.html", {"mensaje": mensaje})
 
 
+def listarCasoAsignadosTecnico(request):
+    if request.user.is_authenticated:
+        
+        try:
+            listaCaso = Caso.objects.filter(casEstado='En Proceso', casUsuario=request.user)
+            listaTipoProcedimiento = TipoProcedimiento.objects.all().values()
+            mensaje = "listado de casos asignados"
+        except Error as error:
+            mensaje = str(error)
+            
+        retorno = {'mensaje':mensaje,'ListaCasos':listaCaso,'listaTipoSolucion':tipoSolucion,'listaTipoProcedimiento': listaTipoProcedimiento}
+        
+        return render(request,"tecnico/listarCasosAsignados.html", retorno)
+    else:
+        mensaje = "debe iniciar sesion"
+        return render(request,"frmIniciarSesion.html",{"mensaje":mensaje})
+        
+    
+def solucionCaso(request):
+    if request.user.is_authenticated:
+        procedimiento = request.POST['txtProcedimiento']        
+        TipoProc = int(request.POST['cbTipoProcedimiento'])
+        TipoProcedimiento = TipoProcedimiento.objects.get(pk=TipoProc)
+        tipoSolucion = request.POST['cbTipoSolucion']
+        idCaso = Caso.objects.get(pk=idCaso)
+        solucionCaso = solucionCaso(solCaso=Caso,solProcedimiento=procedimiento,solTipoSolucion=tipoSolucion)
+        
+        solucionCaso.save()
+        
+        
+        if(tipoSolucion=="definitiva"):
+            Caso.casEstado = 'finalizada'
+            Caso.save()
+            
+        
+        
+        SolucionCasoTipoProcedimientos = SolucionCasoTipoProcedimientos(solSolucionCaso = solucionCaso,solTipoProcedimineto=TipoProcedimiento)
+        
+        SolucionCasoTipoProcedimientos.save()
+        
+    else:
+        pass
+
+
+
 def salir(request):
     auth.logout(request)
     return render(request, "frmIniciarSesion.html",
                   {"mensaje": "Ha cerrado la sesión"})
+
+
+
+
+def estadisticas(request):
+    if request.user.is_authenticated:
+        listarAmbientes = OficinaAmbiente.objects.get
+        
+        
+        textprops = {'fontsize': 6}
+        plt.title("cantidad fr dolicitudes realizadas \n por ambiente")
+
